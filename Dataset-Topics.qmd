@@ -1,23 +1,23 @@
 ---
-author: "Your Name"
+author: "Natasha"
 date: "2023-04-18"
 title: "Project Dataset and Topics"
 output: html
 categories: project
 ---
 
-[Link to dataset]()
+[Link to dataset](https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-14/age_gaps.csv)
 
 Things you plan to investigate using this dataset:
 
-- Thing 1
-- Thing 2
-- Thing 3
+- What is the average age gap between love interests in movies for specific actors?
+- Does the increase of an actor's appearance in movies have an affect on age gap of their love interest?
+- Does the release year of the movie change the age gap between the main love interests?
 
 Stat 251 topics you plan to cover during the analysis:
 
-1. Topic 1
-2. Topic 2
-3. Topic 3
-4. Topic 4
+1. Data cleaning
+2. Visualizing your data efficiently 
+3. Working with strings
+4. Reshaping data 
 
