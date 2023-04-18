@@ -1,0 +1,23 @@
+---
+author: "Your Name"
+date: "2023-04-18"
+title: "Project Dataset and Topics"
+output: html
+categories: project
+---
+
+[Link to dataset]()
+
+Things you plan to investigate using this dataset:
+
+- Thing 1
+- Thing 2
+- Thing 3
+
+Stat 251 topics you plan to cover during the analysis:
+
+1. Topic 1
+2. Topic 2
+3. Topic 3
+4. Topic 4
+
