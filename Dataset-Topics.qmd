@@ -21,3 +21,5 @@ Stat 251 topics you plan to cover during the analysis:
 3. Working with strings
 4. Reshaping data 
 
+
+(2023-04-19 - This looks good. What strings are you planning to work with? - Dr. V)
