@@ -1,8 +1,59 @@
 ---
-author: "Your Name"
+author: "Natasha"
 date: "2023-04-20"
 title: "Screencast Pseudocode"
 output: html
 categories: project
 ---
+
+
+Topic 1: Data Cleaning
+```{r}
+library(tidyverse)
+
+hollywood<- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-14/age_gaps.csv")
+
+```
+
+For my first topic I will need to filter my data into the variables and columns I would need to answer each of my questions.
+
+- First to get the columns I need for the first question I would need the columns with actor one and two, the age difference column. For this I will subset the data with ex. [Hollywood,"col numbers",] specifying which columns I would need from the data set.
+-for my first question since I wanted to look at only a few actors I will focus on four male and four female' actors. I will use a pipe function from the filtered data set in the previous function and add a filter() with & | statements and using a str_detect function to find the movies and data for the actors Im looking at.
+- Then I will use the resulting graph to make a seperate ggplot for each of the genders with x = actor_name, y = avg( avg age difference), fill = count movie. For these portions I anticipate to either use a column chart or dot plot, but there are more available ggplots that I will look into that might better depict the average age gap for the actors that appeared in multiple movies.
+
+
+
+Topic 2: Visualizing data efficiently 
+
+For this topic I will be making graphs that show which movies out of four have the largerst age gap, and which year release dates have the highest average age gap. 
+- For the first graph I will subset the data [,] to have only the first seven movies listed and the age gap for the couple of interest.
+- Then I will create a ggplot(x = Movie, y = Age difference). Use this to make a geom_bar() to represent which of the seven movies has the highest age difference between the actor couple.
+- For the second plot I will subset my data [,] by years I will select five years (1971, 1998, 2008, 2015, 2020), and the second column being age difference.
+- I will then make a ggplot( x = Year, y = avg(Age Difference)) to make a geom_bar, to show the relationship between the average age difference in movies per chosen year.
+
+
+Topic 3: Joining data
+
+For this topic I will focus on movies released in 2006 to answer the question of whether movies with larger age gaps made more money.
+- First Thing I would do is filter the dataset year to create information only on movies released in 2006.
+- My goal is to find an additional data set that would have the information of all the movies released 2006 and their gross.
+- I will then inner_join(x = secondata set, 2006 filtered dataset, by = foreign id from 2006 data set) to match the movies in the original data set to the ones on the list with the gross $.
+
+- I will then subset [dataset, nrow = ,] to select rows with varying age gaps in the 20s, 30s and, 40s 
+
+- I will then use ggplot( x = Movie Name, y = Age Gap, fill = Movie Gross) to create a ggplot that shows th relationship between these three variables I will do further discovery to see which of the select age gaps have the higher movie gross.
+
+Topic 4: Dates and Times
+For this topic I will continue to focus on movies from 2006 I will continue to use the inner joined data set with the movie gross information.
+ - To complete this step however I would need to look for an additional dataset with the information on the 2006 movie release dates, however if I am able to find a data set that has both the movie gross and release date.
+ - If I do not find a data set with both I will Inner_join(Releasedate Dataset, Moviegross, by = "moviegross foreignid")
+ 
+ - After I will use a pipe from the joined dataset to include a mutate(month = mday(releasenmoviegross, label T)), with an additional pipe that has a filter(!month %in% c("June", "July", "December", "January"))
+ 
+ - After gettign the final filtered data set that has only data for the selected months I will create ggplot(x = month, y = moviegross), with a geom_bar() to represent the relationship between the month and the movie gross.
+ 
+
+  
+
+
 
