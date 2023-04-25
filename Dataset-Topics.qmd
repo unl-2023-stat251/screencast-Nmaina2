@@ -11,15 +11,13 @@ categories: project
 Things you plan to investigate using this dataset:
 
 - What is the average age gap between love interests in movies for specific actors?
-- Does the increase of an actor's appearance in movies have an affect on age gap of their love interest?
 - Does the release year of the movie change the age gap between the main love interests?
+- Which of the age gaps for the movies made the most money in 2006.
+- Do movies released in June and July on average make more than movies released in December and January in 2006 ?
 
 Stat 251 topics you plan to cover during the analysis:
 
 1. Data cleaning
 2. Visualizing your data efficiently 
-3. Working with strings
-4. Reshaping data 
-
-
-(2023-04-19 - This looks good. What strings are you planning to work with? - Dr. V)
+3. Joining data 
+4. Dates and Times
