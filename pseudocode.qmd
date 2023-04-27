@@ -25,7 +25,7 @@ For my first topic I will need to filter my data into the variables and columns 
 
 Topic 2: Visualizing data efficiently 
 
-For this topic I will be making graphs that show which movies out of four have the largerst age gap, and which year release dates have the highest average age gap. 
+For this topic I will be making graphs that show which movies out of four have the largest age gap, and which year release dates have the highest average age gap. 
 - For the first graph I will subset the data [,] to have only the first seven movies listed and the age gap for the couple of interest.
 - Then I will create a ggplot(x = Movie, y = Age difference). Use this to make a geom_bar() to represent which of the seven movies has the highest age difference between the actor couple.
 - For the second plot I will subset my data [,] by years I will select five years (1971, 1998, 2008, 2015, 2020), and the second column being age difference.
