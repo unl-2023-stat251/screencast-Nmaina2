@@ -53,7 +53,4 @@ For this topic I will continue to focus on movies from 2006 I will continue to u
  - After gettign the final filtered data set that has only data for the selected months I will create ggplot(x = month, y = moviegross), with a geom_bar() to represent the relationship between the month and the movie gross.
  
 
-  
-
-
 
