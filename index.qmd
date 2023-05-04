@@ -1,5 +1,5 @@
 ---
-author: "Your Name"
+author: "Natasha"
 date: "2023-05-04"
 title: "Project: Screencast"
 output: html
@@ -10,37 +10,144 @@ categories: project
 
 For your final project (which will take the place of the final exam), you will be recording a screencast in the style of David Robinson's TidyTuesday screencasts.
 
-You can find time-stamped, catalogued versions of some of David Robinson's screencasts [here](https://www.rscreencasts.com/). 
+You can find time-stamped, catalogued versions of some of David Robinson's screencasts [here](https://www.rscreencasts.com/).
 
 Requirements:
 
-- Your screencast should be approximately 45 minutes long.
-- Your screencast should show your analysis of a [TidyTuesday dataset from 2023](https://github.com/rfordatascience/tidytuesday)
-- You should showcase at least 4 different techniques you've learned in Stat 251. Some examples include:
+-   Your screencast should be approximately 45 minutes long.
 
-    - data cleaning (dplyr) verbs
-    - reshaping data (tidyr)
-    - working with dates and times (lubridate)
-    - working with strings (stringr)
-    - writing functions to modularize your code
-    - visualizing your data effectively
-    
-Unlike David Robinson's screencasts, you will write a rough pseudocode "script" before you start recording. 
-This will give you a rough outline of how to do the analysis and what things you intend to cover.
+-   Your screencast should show your analysis of a [TidyTuesday dataset from 2023](https://github.com/rfordatascience/tidytuesday)
 
-Your goal is to help a future Stat 251 student understand some of the topics covered in this class. 
-So while David Robinson and others who record their screencasts live might not fully explain what he's doing, you should take the time to explain each technique you decide to use in a way that will help someone else understand.
+-   You should showcase at least 4 different techniques you've learned in Stat 251. Some examples include:
 
+    -   data cleaning (dplyr) verbs
+    -   reshaping data (tidyr)
+    -   working with dates and times (lubridate)
+    -   working with strings (stringr)
+    -   writing functions to modularize your code
+    -   visualizing your data effectively
+
+Unlike David Robinson's screencasts, you will write a rough pseudocode "script" before you start recording. This will give you a rough outline of how to do the analysis and what things you intend to cover.
+
+Your goal is to help a future Stat 251 student understand some of the topics covered in this class. So while David Robinson and others who record their screencasts live might not fully explain what he's doing, you should take the time to explain each technique you decide to use in a way that will help someone else understand.
 
 There will be three deliverables for this project:
 
-1. [Plan your dataset and topics](Dataset-Topics.qmd)
-2. [Pseudocode script](pseudocode.qmd) uploaded to github repository
-3. Screencast + github repository
-    - Screencast uploaded to YouTube/YuJa
-    - Approximate time index provided for each of the 4 techniques you're demonstrating ([examples](https://www.rscreencasts.com/))
-    - Code uploaded to github repository
+1.  [Plan your dataset and topics](Dataset-Topics.qmd)
+2.  [Pseudocode script](pseudocode.qmd) uploaded to github repository
+3.  Screencast + github repository
+    -   Screencast uploaded to YouTube/YuJa
+    -   Approximate time index provided for each of the 4 techniques you're demonstrating ([examples](https://www.rscreencasts.com/))
+    -   Code uploaded to github repository
 
-In lieu of the final exam, you will peer review two classmates' screencasts. 
+In lieu of the final exam, you will peer review two classmates' screencasts.
+
+``` {r}
+
+library(tidyverse)
+
+hollywood<- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-14/age_gaps.csv")
 
 
+```
+
+
+Topic 1: Data Cleaning
+```{r}
+
+Hollywoodsecrets<- hollywood%>%
+  select(1,2,4, 6:9,12,13)%>% #we use the select function from dyplr for column selection
+  filter(release_year %in% c('2004', '2006', '2008', '2010', '2012', '2014', '2016', '2018' ))
+#Create table with specific actors of interest
+
+SpecActors<- Hollywoodsecrets%>%
+  filter(actor_1_name %in% c("Adam Sandler", "Leonarod DiCaprio", "Jamie Foxx", "Tom Cruise","Hugh Jackman", "Keira Knightley", "Cameron Diaz", "Anne Hathaway", "Mila Kunis", "Julian Moore"))
+  
+
+#ggplot for average age difference distribution by gender
+
+p<- ggplot(SpecActors, mapping = aes(x = character_1_gender, y = mean(age_difference)))
+
+
+p + geom_col(fill = "blue") + labs(x = "Main Character Gender", y = "Average age difference", title = "Average age difference by Main character Gender")
+  
+#shows the relationship between the average age difference with either a male or female character as the main character
+```
+
+
+
+Topic 2: Visualizing data efficiently 
+```{r}
+#First visualization 
+#Visualizing the relationship between the first seven actors in the data set
+Vissub1<- hollywood%>%
+   select(1,2,4, 6:9,12,13)%>%
+  head(7)
+
+pvis1<- ggplot(Vissub1, mapping = aes(x = movie_name, y = age_difference))
+
+pvis1 + geom_col(fill = "lightblue") + labs(x = "Movie Name", y = "Age Difference", title = "Age difference for the first 7 movies") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+#Second visualization
+# Visualzing the average age difference per chosen year to se which out of the chosen had the largest age gap.
+
+Vissub2<- hollywood%>%
+   select(1,2,4, 6:9,12,13)%>%
+  filter(release_year == '2004'|release_year == '2008' | release_year == '2012' | release_year == '2016')
+
+pvis2<- ggplot(Vissub2, mapping = aes(x = release_year, y = mean(age_difference)))
+
+pvis2 + geom_bar(stat = "identity", fill = "lightpink") + labs(x = "Year", y = "Average age difference", title = "Year of movie release and Average age difference")
+
+
+```
+
+
+Topic 3: Joining Data 
+```{r}
+library(lubridate)
+
+moviedata<- read_csv("movies_metadata.csv")
+
+moviedata2006<- moviedata%>%
+  select(9,15,16)%>%
+  filter(year(release_date)== '2006')
+
+Hollywood06<- hollywood%>%
+  filter(release_year== '2006')
+
+#Use inner join to match movies that are present in both data sets to get revenue
+hollymovie06<- inner_join(moviedata2006, Hollywood06, by = c("original_title" = "movie_name"))
+
+#Notice when we inner join the data there are some duplicates in the function so we need to use the distinct function from dyplr and specify which columns have duplicate we want to remove and to make sure we don't filter those columns out of the data set we add the .keep_all at the end of it.
+
+Hollymov06<- hollymovie06%>%
+  distinct(original_title,revenue, .keep_all = T)%>%
+  filter(str_detect(original_title, "The Devil Wears Prada")| str_detect(original_title, "Dreamgirls") | str_detect(original_title, "Last Holiday") | str_detect(original_title,"The Lake House")| str_detect(original_title,"Accepted"))
+
+prev06<- ggplot(Hollymov06, mapping = aes(x = original_title, y = log(revenue)))
+
+prev06 +geom_col(fill= "lightgreen")+ labs(x= "Movie Name", y = "Revenue", title = "Movie Name and revenue 2006")
+
+```
+
+
+Topic 4:Dates and Times
+```{r}
+library(tidyverse)
+library(lubridate)
+Hollymov6DT<- hollymovie06%>%
+  distinct(original_title,revenue, .keep_all = T)%>%
+  mutate(month = month(release_date, label = T))%>%
+  filter(month %in% c("Jun", "Jul", "Dec", "Jan"))
+  
+  
+#create ggplot to show relationship between the release months and the revenue earned
+pjjdj<- ggplot(Hollymov6DT, mapping = aes(x = month, y = log(revenue)))
+
+
+pjjdj + geom_col(fill = "purple") + labs(x = "Month of Release", y = "Revenue", title = "Month of movie release and revenue")
+
+
+
+```
