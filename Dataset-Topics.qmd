@@ -11,8 +11,9 @@ categories: project
 Things you plan to investigate using this dataset:
 
 - What is the average age gap between love interests in movies for specific actors?
+- How do we visualize the age difference between the first seven rows of actors?
 - Does the release year of the movie change the age gap between the main love interests?
-- Which of the age gaps for the movies made the most money in 2006.
+- Which of the movies made the most money on average in 2006 out of 5 chosen movies ?
 - Do movies released in June and July on average make more than movies released in December and January in 2006 ?
 
 Stat 251 topics you plan to cover during the analysis:
