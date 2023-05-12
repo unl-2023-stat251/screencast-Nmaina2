@@ -1,0 +1,122 @@
+---
+title: "Screencast code"
+author: "Natasha"
+format: html
+editor: visual
+---
+
+## Things you plan to investigate using this dataset:
+
+-    What is the average age gap between actors in movies for specific actors as the main character?
+
+```{=html}
+<!-- -->
+```
+-   How do we visualize the age difference between the first seven rows of actors?
+
+-    Does the release year of the movie change the age gap between the main characters?
+
+-    Which of the movies made the most money on average in 2006 out of 5 chosen movies ?
+
+-    Do movies released in June and July on average make more than movies released in December and January in 2006 ?
+
+Stat 251 topics you plan to cover during the analysis:
+
+1\. Data cleaning - Discussed in video starting at 00:00:55
+
+2\. Visualizing your data efficiently - Discussed in video starting at 00:16:55
+
+3\. Joining data - Discussed in video starting at 00:40:07
+
+4\. Dates and Times - Discussed in video starting at 00:58:41
+
+```{r}
+library(tidyverse)
+hollywood<- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-02-14/age_gaps.csv")
+
+
+```
+
+Topic 1: Data cleaning
+
+```{r}
+Hollywoodsecrets<- hollywood%>%
+  select(1,2,4, 6:9, 12, 13)%>%
+  filter(release_year %in% c('2004', '2006', '2008', '2010', '2012','2014','2016','2018'))
+
+Specific<- Hollywoodsecrets%>%
+  filter(actor_1_name %in% c("Adam Sandler", "Leonardo DiCaprio", "Jamie Foxx", "Tom Cruise", "Hugh Jackman", "Keira Knightley", "Cameron Diaz", "Anne Hathaway", "Mila Kunis", "Julian Moore"))
+
+p<- ggplot(Specific, mapping = aes(x = character_1_gender, y = mean(age_difference)))
+
+p + geom_col(fill = "blue") + labs(x = " Main Character Gender", y = "Average Age Difference", title = "Average Age Differences of Main Character by Gender")
+
+
+
+```
+
+Topic 2: Visualizing data
+
+```{r}
+
+Vis1<- hollywood%>%
+  select(1,2,4, 6:9, 12, 13)%>%
+  head(7)
+
+pvis1<- ggplot(Vis1, mapping = aes(x = movie_name, y = age_difference))
+
+pvis1 + geom_col(fill = "lightblue") + labs(x = "Movie Name", y = "Age Difference", title = "Age difference for the first 7 movies") + theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+#vis 2 average age for chosen years
+
+vis2<- hollywood%>%
+  select(1,2,4, 6:9, 12, 13)%>%
+  filter(release_year %in% c('2004', '2008','2012', '2016'))
+
+pvis2<- ggplot(vis2, mapping = aes( x = release_year, y = mean(age_difference)))
+               
+pvis2 + geom_bar(stat = "identity", fill = "lightpink") + labs(x = "Year", y = "Average age", title = "Year of Movie Release and Average Age Difference")
+```
+
+Topic 3: Joining Data
+
+```{r}
+
+moviedata<- read_csv("movies_metadata.csv")
+
+movie2006<- moviedata%>%
+  select(9, 15, 16)%>%
+  filter(year(release_date)== '2006')
+
+Hollywood06<- hollywood%>%
+  filter(release_year == '2006')
+
+hollywoodmovie06<- inner_join(movie2006, Hollywood06, by = c("original_title" = "movie_name"))
+
+Hollmove6<- hollywoodmovie06%>%
+  distinct(original_title, revenue, .keep_all = T)%>%
+  filter(original_title %in% c("The Devil Wears Prada", "Dreamgirls", "Last Holiday", "The Lake House", "Accepted"))
+
+prevo6<- ggplot(Hollmove6, mapping = aes(x = original_title, y = revenue))
+
+prev06 +geom_col(fill= "lightgreen")+ labs(x= "Movie Name", y = "Revenue", title = "Movie Name and revenue 2006")
+
+
+```
+
+Topic 4: Dates and Time
+
+```{r}
+
+library(lubridate)
+
+Holl6DT<- hollywoodmovie06%>%
+  distinct(original_title, revenue, .keep_all = T)%>%
+  mutate(month = month(release_date, label = T))%>%
+  filter(month %in% c("Jun", "Jul", "Dec", "Jan"))
+
+pjjdj<- ggplot(Holl6DT, mapping = aes( x = month, y = log(revenue)))
+
+pjjdj + geom_col(fill = "purple") + labs(x = "Month of Release", y = "Revenue", title = "Month of movie release and revenue")
+```
