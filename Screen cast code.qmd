@@ -1,3 +1,4 @@
+
 ---
 title: "Screencast code"
 author: "Natasha"
@@ -22,6 +23,7 @@ editor: visual
 
 Stat 251 topics you plan to cover during the analysis:
 
+
 1\. Data cleaning - Discussed in video starting at 00:00:55
 
 2\. Visualizing your data efficiently - Discussed in video starting at 00:16:55
@@ -29,6 +31,7 @@ Stat 251 topics you plan to cover during the analysis:
 3\. Joining data - Discussed in video starting at 00:40:07
 
 4\. Dates and Times - Discussed in video starting at 00:58:41
+
 
 ```{r}
 library(tidyverse)
@@ -120,3 +123,4 @@ pjjdj<- ggplot(Holl6DT, mapping = aes( x = month, y = log(revenue)))
 
 pjjdj + geom_col(fill = "purple") + labs(x = "Month of Release", y = "Revenue", title = "Month of movie release and revenue")
 ```
+
